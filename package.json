@@ -9,10 +9,14 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-joi-validation": "^0.3.0",
+    "express-validation": "^1.0.2",
+    "express-validator": "^5.3.1",
+    "http-errors": "~1.6.2",
+    "joi": "^14.3.1",
     "morgan": "~1.9.0",
     "mysql2": "^1.6.4",
     "sequelize": "^4.42.0",
-    "serverless-http": "^1.8.0",
-    "http-errors": "~1.6.2"
+    "serverless-http": "^1.8.0"
   }
 }
