@@ -8,19 +8,23 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('./config.js')[env];
 const db = {};
 
+// const root = path.normalize(`${__dirname}${path.sep}..`);
+const models_dirname = path.join(__dirname, "../db/models");
+
+let sequelize;
 if (config.use_env_variable) {
-    var sequelize = new Sequelize(process.env[config.use_env_variable], config);
+    sequelize = new Sequelize(config.use_env_variable, config.config);
 } else {
-    var sequelize = new Sequelize(config.database, config.username, config.password, config);
+    sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs
-    .readdirSync(__dirname)
+    .readdirSync(models_dirname)
     .filter(file => {
         return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
     })
     .forEach(file => {
-        const model = sequelize['import'](path.join(__dirname, file));
+        const model = sequelize['import'](path.join(models_dirname, file));
         db[model.name] = model;
     });
 
