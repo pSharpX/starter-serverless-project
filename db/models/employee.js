@@ -34,7 +34,6 @@ module.exports = (sequelize, DataType) => {
         //         }
         //     }
         // },
-        text: DataType.STRING,
         firstName: {
             type: DataType.STRING,
             field: 'first_name',
