@@ -12,6 +12,11 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    // return queryInterface.bulkInsert('attendance', [{
+    //   firstName: 'John',
+    //   lastName: 'Doe',
+    //   email: 'demo@demo.com'
+    // }], {});
   },
 
   down: (queryInterface, Sequelize) => {
@@ -22,5 +27,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
+    return queryInterface.bulkDelete('attendance', null, {});
   }
 };

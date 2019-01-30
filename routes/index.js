@@ -5,12 +5,16 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   models.Employee.findAll().then(function(employees) {
-    res.render('index', {
-      title: 'Sequelize: Express Example',
-      users: employees
-    });
+    console.log(employees);
+    // res.render('index', {
+    //   title: 'Sequelize: Express Example'
+    // });
+    res.send(employees);
+  }).catch(err => {
+    console.log(err);
   });
-  res.render('index', { title: 'Express' });
+  res.send('data');
+  // res.render('index', { title: 'Express' });
 });
 
 module.exports = router;

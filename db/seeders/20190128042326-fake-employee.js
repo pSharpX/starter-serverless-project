@@ -12,6 +12,15 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    return queryInterface.bulkInsert('employee', [{
+      first_name: 'Christian',
+      last_name: 'Rivera',
+      email: 'cerivera@indracompany.com',
+      address: 'St. Jazmin #120',
+      position: 'Software Developer',
+      birthday:  new Date(1993,4,20),
+      dni: '48048360'
+    }], {});
   },
 
   down: (queryInterface, Sequelize) => {
@@ -22,5 +31,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
+    return queryInterface.bulkDelete('employee', null, {});
   }
 };
