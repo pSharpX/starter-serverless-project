@@ -1,6 +1,6 @@
 module.exports = {
     development: {
-        use_env_variable: 'mysql://localhost:3306/db_attendance',
+        use_env_variable: 'mysql://root@127.0.0.1:3306/db_attendance',
         database: "db_attendance",
         username: 'root',
         password: null,
@@ -21,7 +21,7 @@ module.exports = {
                 dialectOptions: {
                     collate: 'utf8_general_ci'
                 },
-                timestamps: true
+                timestamps: false
             },
         }
     },

@@ -3,9 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "start:server": "webpack --config webpack.config.server.js"
   },
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "7",
+    "babel-preset-env": "^1.7.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
@@ -17,6 +21,12 @@
     "morgan": "~1.9.0",
     "mysql2": "^1.6.4",
     "sequelize": "^4.42.0",
-    "serverless-http": "^1.8.0"
+    "serverless-http": "^1.8.0",
+    "start-server-webpack-plugin": "^2.2.5",
+    "webpack": "^4.29.2",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.3"
   }
 }

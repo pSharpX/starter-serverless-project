@@ -9,7 +9,7 @@ const config = require('./config.js')[env];
 const db = {};
 
 // const root = path.normalize(`${__dirname}${path.sep}..`);
-const models_dirname = path.join(__dirname, "../db/models");
+const models_dirname = path.resolve(__dirname, "../db/models");
 
 let sequelize;
 if (config.use_env_variable) {
