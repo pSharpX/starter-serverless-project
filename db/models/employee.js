@@ -122,6 +122,7 @@ module.exports = (sequelize, DataType) => {
         freezeTableName: true,
         tableName: 'employee',
         comment: "I'm a table employee!",
+        underscored: true,
         getterMethods: {
             fullName() {
                 return this.firstName + ' ' + this.lastName;

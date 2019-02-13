@@ -37,7 +37,7 @@ module.exports = (sequelize, DataType) => {
         //     field: 'employee_id',
         //     references: {
         //         // This is a reference to another model
-        //         model: Employee,
+        //         // model: Employee,
         //         // This is the column name of the referenced model
         //         key: 'employee_id'
         //         // This declares when to check the foreign key constraint. PostgreSQL only.
@@ -56,10 +56,12 @@ module.exports = (sequelize, DataType) => {
         freezeTableName: true,
         tableName: 'attendance',
         comment: "I'm a table attendance!",
+        underscored: true
         // indexes: [ { unique: true, fields: [ 'someUnique' ] } ]
     });
 
     Attendance.associate = function (models) {
+        // User.belongsTo(UserRole, {as: 'role'}); // Adds roleId to user rather than userRoleId
         models.Attendance.belongsTo(models.Employee, {
             onDelete: "CASCADE",
             foreignKey: {
