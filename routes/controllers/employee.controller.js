@@ -46,6 +46,20 @@ module.exports = {
             })
         })
     },
+    getByUuid: (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            const uuid = req.params[0];
+            employeeService.getByUuid(uuid).then(employee => {
+                res.status(200).json({
+                    data: {
+                        employee
+                    }
+                });
+            }).catch(err => {
+                return next(err);
+            })
+        })
+    },
 
     create: (req, res, next) => {
         return new Promise((resolve, reject) => {
