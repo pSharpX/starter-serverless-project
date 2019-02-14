@@ -27,6 +27,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
+    "prettier": "^1.16.4",
     "webpack-cli": "^3.2.3"
   }
 }
