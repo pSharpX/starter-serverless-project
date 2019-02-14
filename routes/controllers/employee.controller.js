@@ -63,6 +63,19 @@ module.exports = {
     },
 
     update: (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            const id = parseInt(req.params[0]);
+            const employee = req.body;
+            employeeService.update(id, employee).then(updated=> {
+                res.status(200).json({
+                    data: {
+                        updated
+                    }
+                });
+            }).catch(err => {
+                return next(err);
+            })
+        })
     },
     remove: (req, res, next) => {
     }

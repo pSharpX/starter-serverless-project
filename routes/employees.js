@@ -5,11 +5,11 @@ const {get, getAll, search, create, remove, update} = require("./controllers/emp
 const router = express.Router();
 
 // router.get("/:id", get);
-router.get(/^(\d+)$/, get);
+router.get(/^\/(\d+)$/, get);
 router.get("/", getAll);
 router.get("/search", search);
 router.post("/", create);
-router.put("/:id", update);
-router.delete("/:id", remove);
+router.put(/^\/(\d+)$/, update);
+router.delete(/^\/(\d+)$/, remove);
 
 module.exports = router;

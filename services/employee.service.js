@@ -8,9 +8,5 @@ module.exports = {
     find: (params) => repository.findAll({where: params}),
     search: (params) => repository.findAll({where: params}),
     create: (employee) => repository.create(employee, {fields: ["firstName", "lastName", "address", "email", "position", "birthday", "dni"]}),
-    update: (id, employee) => repository.update(employee, {
-        where: {
-            id
-        }
-    })
+    update: (id, employee) => repository.update(employee, { where: { id }})
 };
