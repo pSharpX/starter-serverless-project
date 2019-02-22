@@ -13,13 +13,14 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('employee', [{
-      first_name: 'Christian',
-      last_name: 'Rivera',
-      email: 'cerivera@indracompany.com',
+      uuid: Sequelize.UUIDV1,
+      first_name: 'Eduardo',
+      last_name: 'Tello',
+      email: 'cerivera@rimac.com.pe',
       address: 'St. Jazmin #120',
       position: 'Software Developer',
       birthday:  new Date(1993,4,20),
-      dni: '48048360'
+      dni: '48048362'
     }], {});
   },
 

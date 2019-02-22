@@ -32,18 +32,18 @@ module.exports = (sequelize, DataType) => {
                 return this.getDataValue('action_enum') + ' (' + time + ')';
             },
         },
-        // employeeId: {
-        //     type: DataType.INTEGER,
-        //     field: 'employee_id',
-        //     references: {
-        //         // This is a reference to another model
-        //         // model: Employee,
-        //         // This is the column name of the referenced model
-        //         key: 'employee_id'
-        //         // This declares when to check the foreign key constraint. PostgreSQL only.
-        //         // deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-        //     }
-        // },
+        employeeId: {
+            type: DataType.INTEGER,
+            field: 'employee_id',
+            references: {
+                // This is a reference to another model
+                // model: Employee,
+                // This is the column name of the referenced model
+                key: 'employee_id'
+                // This declares when to check the foreign key constraint. PostgreSQL only.
+                // deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+            }
+        },
         // Creating two objects with the same value will throw an error. The unique property can be either a
         // boolean, or a string. If you provide the same string for multiple columns, they will form a
         // composite unique key.
