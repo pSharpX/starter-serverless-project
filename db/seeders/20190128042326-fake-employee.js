@@ -1,5 +1,7 @@
 'use strict';
 
+const uuid = require("uuid/v1");
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -13,7 +15,7 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('employee', [{
-      uuid: Sequelize.UUIDV1,
+      uuid: uuid(),
       first_name: 'Eduardo',
       last_name: 'Tello',
       email: 'cerivera@rimac.com.pe',

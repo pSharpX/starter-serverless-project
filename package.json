@@ -23,6 +23,7 @@
     "sequelize": "^4.42.0",
     "serverless-http": "^1.8.0",
     "start-server-webpack-plugin": "^2.2.5",
+    "uuid": "^3.3.2",
     "webpack": "^4.29.2",
     "webpack-node-externals": "^1.7.2"
   },
