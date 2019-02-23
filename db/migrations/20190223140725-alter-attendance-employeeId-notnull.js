@@ -1,7 +1,5 @@
 'use strict';
 
-const uuid = require("uuid/v1");
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -9,16 +7,16 @@ module.exports = {
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
+      return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    return queryInterface.bulkUpdate('employee', {
-      uuid: uuid()
-    },{
-      employee_id: 9
-    }, {});
+    return queryInterface.changeColumn(
+        'attendance',
+        'employee_id',
+        {
+          type: Sequelize.INTEGER,
+          allowNull: false
+        }
+    );
   },
 
   down: (queryInterface, Sequelize) => {
@@ -27,7 +25,7 @@ module.exports = {
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkDelete('People', null, {});
+      return queryInterface.dropTable('users');
     */
   }
 };
