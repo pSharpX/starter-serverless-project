@@ -8,13 +8,23 @@ module.exports = (sequelize, DataType) => {
         action: {
             type: DataType.STRING(25),
             field: 'action_name',
-            allowNull: false
+            allowNull: false,
+            get() {
+                const action = this.getDataValue('action');
+                // 'this' allows you to access attributes of the instance
+                return action.toUpperCase();
+            },
         },
         action_enum: {
             type: DataType.ENUM,
             values: ['entrada', 'salida'],
             field: 'action_enum',
-            allowNull: false
+            allowNull: false,
+            get() {
+                const action_enum = this.getDataValue('action_enum');
+                // 'this' allows you to access attributes of the instance
+                return action_enum.toUpperCase();
+            },
         },
         date: {
             type: DataType.DATE,
@@ -29,7 +39,8 @@ module.exports = (sequelize, DataType) => {
             get() {
                 const time = this.getDataValue('time');
                 // 'this' allows you to access attributes of the instance
-                return this.getDataValue('action_enum') + ' (' + time + ')';
+                // return this.getDataValue('action_enum') + ' (' + time + ')';
+                return time;
             },
         },
         employeeId: {

@@ -11,6 +11,7 @@ module.exports = {
     search: (params) => repository.findAll({where: params}),
     create: (attendance) => new Promise((resolve, reject) => {
         const employeeId = attendance.employeeId;
+        attendance.action_enum = attendance.action;
         sequelize.transaction((t) => {
             // chain all your queries here. make sure you return them.
             return employeeRepository

@@ -11,6 +11,7 @@
     "babel-loader": "7",
     "babel-preset-env": "^1.7.0",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "express-joi-validation": "^0.3.0",

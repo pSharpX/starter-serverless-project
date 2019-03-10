@@ -4,6 +4,7 @@ module.exports = {
         database: "db_attendance",
         username: 'root',
         password: null,
+        timezone: '+05:00',
         config: {
             host: 'localhost',
             dialect: 'mysql',
@@ -23,7 +24,29 @@ module.exports = {
                 },
                 timestamps: false
             },
-        }
+            timezone: '+05:00',
+            dialectOptions: {
+                useUTC: false, //for reading from database
+                dateStrings: true,
+                typeCast: function (field, next) { // for reading from database
+                    if (field.type === 'DATETIME') {
+                        // return field.string()
+                        return new Date(field.string() + 'Z');
+                    }
+                    return next()
+                },
+            },
+        },
+        dialectOptions: {
+            useUTC: false, //for reading from database
+            dateStrings: true,
+            typeCast: function (field, next) { // for reading from database
+                if (field.type === 'DATETIME') {
+                    return field.string()
+                }
+                return next()
+            },
+        },
     },
     aws: {
         dialect: "sqlite",
@@ -41,6 +64,7 @@ module.exports = {
         database: process.env.DB_NAME,
         host: process.env.DB_HOSTNAME,
         dialect: 'mysql',
-        use_env_variable: 'DATABASE_URL'
+        use_env_variable: 'DATABASE_URL',
+        timezone: 'America/Lima'
     }
 };
