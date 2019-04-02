@@ -64,7 +64,7 @@ module.exports = {
     create: (req, res, next) => {
         return new Promise((resolve, reject) => {
             const employee = req.body;
-            employeeService.create(employee).then(created=> {
+            employeeService.create(employee).then(created => {
                 res.status(200).json({
                     data: {
                         created
@@ -80,7 +80,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             const id = parseInt(req.params[0]);
             const employee = req.body;
-            employeeService.update(id, employee).then(updated=> {
+            employeeService.update(id, employee).then(updated => {
                 res.status(200).json({
                     data: {
                         updated
@@ -93,6 +93,4 @@ module.exports = {
     },
     remove: (req, res, next) => {
     }
-
 }
-

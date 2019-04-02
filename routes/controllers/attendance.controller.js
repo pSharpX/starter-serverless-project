@@ -84,7 +84,31 @@ module.exports = {
         })
     },
     remove: (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            const id = parseInt(req.params[0]);
+            attendanceService.delete(id).then(deleted => {
+                res.status(200).json({
+                    data: {
+                        deleted
+                    }
+                });
+            }).catch(err => {
+                return next(err);
+            })
+        })
+    },
+    removeLast: (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            const id = parseInt(req.params[0]);
+            attendanceService.deleteLast(id).then(deleted => {
+                res.status(200).json({
+                    data: {
+                        deleted
+                    }
+                });
+            }).catch(err => {
+                return next(err);
+            })
+        })
     }
-
 }
-
