@@ -62,32 +62,20 @@ module.exports = {
         }
     }),
     deleteLast: () => new Promise((resolve, reject) => {
-        // repository.max("date", {
-        //     where: {
-        //         date: {
-        //             [Op.lte]: new Date()
-        //         }
-        //     }
-        // })
         repository.findOne({
-            attributes: [
-                sequelize.fn('max', sequelize.col('attendance_date')),
-                "id"
+            order: [
+                ['date', 'DESC'],
             ],
             where: {
                 date: {
                     [Op.lte]: new Date()
                 }
             }
-        }).then((max) => {
-            console.log(max);
-            return Promise.resolve(max);
-            // return repository.destroy({
-            //     where: {
-            //         id: max.id
-            //     }
-            // })
-        }).then(deleted => {
+        }).then((max) => repository.destroy({
+            where: {
+                id: max.id
+            }
+        })).then(deleted => {
             resolve(deleted);
         }).catch(err => {
             reject(err)
