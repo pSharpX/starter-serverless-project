@@ -12,17 +12,23 @@ const Op = Sequelize.Op;
 
 module.exports = {
     getAll: ({
+        employeeId,
         from,
         to
     }) => new Promise((resolve, reject) => {
         const params = {};
-        if (from && to) {
-            params["where"] = {
-                date: {
-                    [Op.between]: [from, to]
-                }
-            }
+        let $where = {};
+        if (employeeId) {
+            $where = params.where || {};
+            $where.employeeId = employeeId;
         }
+        if (from && to) {
+            $where = params.where || {};
+            $where.date = {
+                [Op.between]: [from, to]
+            };
+        }
+        params.where = $where;
         repository.findAll(params)
             .then(res => resolve(res))
             .catch(err => reject(err));
@@ -42,17 +48,27 @@ module.exports = {
             .catch(err => reject(err));
     }),
     generateReport: ({
+        employeeId,
         from,
         to
     }) => new Promise((resolve, reject) => {
-        repository.findAll({
-                where: {
-                    date: {
-                        [Op.between]: [from, to]
-                    }
-                }
-            })
+        const params = {};
+        if (employeeId) {
+            params.where = params.where || {};
+            params.where.employeeId = employeeId;
+        }
+        if (from && to) {
+            params.where = params.where || {};
+            params.where.date = {
+                [Op.between]: [from, to]
+            };
+        }
+        params.include = [{
+            model: employeeRepository
+        }];
+        repository.findAll(params)
             .then(attendances => {
+                console.log(attendances);
                 const docDefinition = {
                     pageOrientation: 'landscape',
                     pageSize: 'A4',

@@ -1,6 +1,14 @@
 const express = require("express");
 // import Ctrlrs from "./controllers";
-const {get, getAll, getByUuid,search, create, remove, update} = require("./controllers/employee.controller");
+const {
+    get,
+    getAll,
+    getByUuid,
+    search,
+    create,
+    remove,
+    update
+} = require("./controllers/employee.controller");
 
 const router = express.Router();
 

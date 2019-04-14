@@ -16,6 +16,12 @@ const intervalSchema = Joi.object().keys({
     to: Joi.date().max('1-1-2050').required(),
 });
 
+const optionalIntervalSchema = Joi.object().keys({
+    employeeId: Joi.number().integer().positive().required(),
+    from: Joi.date().max('1-1-2050').optional(),
+    to: Joi.date().max('1-1-2050').optional(),
+});
+
 const paginationSchema = Joi.object().keys({
     page: Joi.number().integer().positive().max(150).required(),
     limit: Joi.number().integer().positive().max(100).required()
@@ -34,7 +40,20 @@ module.exports = {
             return next(err);
         })
     }),
-
+    getByEmployee: (req, res, next) => new Promise((resolve, reject) => {
+        console.log("Iam here !");
+        console.log(req.params);
+        const id = parseInt(req.params[0]);
+        attendanceService.get(id).then(attendance => {
+            res.status(200).json({
+                data: {
+                    attendance
+                }
+            });
+        }).catch(err => {
+            return next(err);
+        })
+    }),
     getAll: (req, res, next) => new Promise((resolve, reject) => {
         const from = req.params.from;
         const to = req.params.to;
@@ -63,6 +82,37 @@ module.exports = {
             }
         });
     }),
+    getAllByEmployee: (req, res, next) => new Promise((resolve, reject) => {
+        const employeeId = req.params.employeeId;
+        const from = req.params.from;
+        const to = req.params.to;
+        const data = {
+            employeeId,
+            from,
+            to
+        };
+        Joi.validate(data, optionalIntervalSchema)
+            .then(value => {
+                const pagination = req.query;
+                const params = {
+                    employeeId: value.employeeId
+                };
+                if (value.from) params.from = moment(from, "MM-DD-YYYY").toDate();
+                if (value.to) params.to = moment(to, "MM-DD-YYYY").toDate();
+                return attendanceService.getAll(params)
+            })
+            .then(attendances => {
+                res.status(200).json({
+                    data: {
+                        attendances
+                    }
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                return next(err);
+            });
+    }),
 
     generateReport: (req, res, next) => new Promise((resolve, reject) => {
         const from = req.params.from;
@@ -90,6 +140,35 @@ module.exports = {
                 return next(err);
             });
     }),
+    generateReportByEmployee: (req, res, next) => new Promise((resolve, reject) => {
+        const employeeId = req.params.employeeId;
+        const from = req.params.from;
+        const to = req.params.to;
+        const data = {
+            employeeId,
+            from,
+            to
+        };
+        Joi.validate(data, optionalIntervalSchema)
+            .then(value => {
+                const params = {
+                    employeeId: value.employeeId
+                };
+                if (value.from) params.from = moment(from, "MM-DD-YYYY").toDate();
+                if (value.to) params.to = moment(to, "MM-DD-YYYY").toDate();
+                return attendanceService.generateReport(params);
+            })
+            .then(response => {
+                const filename = `reporte_${from}_${to}.pdf`;
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
+                res.send(response);
+            })
+            .catch(err => {
+                console.log(err);
+                return next(err);
+            });
+    }),
 
     search: (req, res, next) => new Promise((resolve, reject) => {
         const params = req.query;
@@ -105,6 +184,23 @@ module.exports = {
     }),
 
     create: (req, res, next) => new Promise((resolve, reject) => {
+        const attendance = req.body;
+        attendanceService.create(attendance).then(created => {
+            res.status(200).json({
+                data: {
+                    attendance: created
+                }
+            });
+        }).catch(err => {
+            reject(err);
+        })
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    }),
+    createByEmployee: (req, res, next) => new Promise((resolve, reject) => {
         const attendance = req.body;
         attendanceService.create(attendance).then(created => {
             res.status(200).json({
@@ -158,6 +254,17 @@ module.exports = {
         }).catch(err => {
             return next(err);
         })
-    })
-
+    }),
+    removeLastByEmployee: (req, res, next) => new Promise((resolve, reject) => {
+        const id = parseInt(req.params[0]);
+        attendanceService.deleteLast(id).then(deleted => {
+            res.status(200).json({
+                data: {
+                    deleted
+                }
+            });
+        }).catch(err => {
+            return next(err);
+        })
+    }),
 }

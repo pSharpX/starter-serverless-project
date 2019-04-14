@@ -10,12 +10,15 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const attendancesRouter = require('./routes/attendances');
 const employeesRouter = require('./routes/employees');
+const attendancesByEmployeeRouter = require("./routes/attendancesByEmployee");
 
 const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
@@ -24,6 +27,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/attendances', attendancesRouter);
 app.use('/employees', employeesRouter);
+app.use('/employees/:employeeId/attendances', attendancesByEmployeeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -42,5 +46,5 @@ app.use(function (err, req, res, next) {
     res.json(err);
 });
 
-// module.exports = app;
-module.exports.handler = serverless(app);
+module.exports = app;
+// module.exports.handler = serverless(app);
