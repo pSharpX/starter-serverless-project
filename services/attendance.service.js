@@ -1,4 +1,8 @@
 const models = require("../config/sequelize");
+const {
+    generatePdf
+} = require("../helpers/pdf.helper");
+const reportHelper = require("../helpers/report.helper");
 const repository = models.Attendance;
 
 const employeeRepository = models.Employee;
@@ -7,7 +11,99 @@ const Sequelize = models.Sequelize;
 const Op = Sequelize.Op;
 
 module.exports = {
-    getAll: () => repository.findAll(),
+    getAll: ({
+        from,
+        to
+    }) => new Promise((resolve, reject) => {
+        const params = {};
+        if (from && to) {
+            params["where"] = {
+                date: {
+                    [Op.between]: [from, to]
+                }
+            }
+        }
+        repository.findAll(params)
+            .then(res => resolve(res))
+            .catch(err => reject(err));
+    }),
+    getAllByInterval: ({
+        from,
+        to
+    }) => new Promise((resolve, reject) => {
+        repository.findAll({
+                where: {
+                    date: {
+                        [Op.between]: [from, to]
+                    }
+                }
+            })
+            .then(res => resolve(res))
+            .catch(err => reject(err));
+    }),
+    generateReport: ({
+        from,
+        to
+    }) => new Promise((resolve, reject) => {
+        repository.findAll({
+                where: {
+                    date: {
+                        [Op.between]: [from, to]
+                    }
+                }
+            })
+            .then(attendances => {
+                const docDefinition = {
+                    pageOrientation: 'landscape',
+                    pageSize: 'A4',
+                    content: [{
+                            style: "title",
+                            text: 'KURMI COLOR SAC',
+                            alignment: 'center',
+                        },
+                        {
+                            alignment: 'justify',
+                            columns: [
+                                reportHelper.getReportSection(),
+                                reportHelper.getReportSection()
+                            ]
+                        }
+                    ],
+                    styles: {
+                        title: {
+                            bold: true,
+                            fillColor: '#eeeeee',
+                            margin: [5, 5]
+                        },
+                        tableHeader: {
+                            alignment: 'center',
+                            fillColor: '#eeeeee',
+                            padding: [2, 0, 2, 0]
+                        },
+                        columnContent: {
+                            margin: [2, 0, 2, 0]
+                        },
+                        tableContent: {
+                            fontSize: 8,
+                            color: 'black',
+                            margin: [0, 5, 0, 10]
+                        },
+                        signatureSection: {
+                            alignment: 'center',
+                            fontSize: 8,
+                            color: 'black',
+                            margin: [0, 50, 0, 5]
+                        },
+                    }
+                };
+
+                generatePdf(docDefinition, (response) => {
+                    resolve(response);
+                }, reject);
+            })
+            .catch(err => reject(err));
+
+    }),
     get: (id) => repository.findById(id),
     find: (params) => repository.findAll({
         where: params

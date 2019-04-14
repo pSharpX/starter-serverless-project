@@ -3,6 +3,7 @@ const express = require("express");
 const {
     get,
     getAll,
+    generateReport,
     search,
     create,
     remove,
@@ -14,6 +15,8 @@ const router = express.Router();
 
 // router.get("/:id", get);
 router.get(/^\/(\d+)$/, get);
+router.get("/:from/:to/report", generateReport);
+router.get("/:from/:to", getAll);
 router.get("/", getAll);
 router.get("/search", search);
 router.post("/", create);
